@@ -169,12 +169,14 @@ def include_box(index, h_, contour):
                 count_children(get_parent(index, h_), h_, contour)) + " children"
             print "\thas " + str(count_children(index, h_, contour)) + " children"
 
-    if is_child(index, h_) and count_children(get_parent(index, h_), h_, contour) <= 2:
+    # English language can have maximum 5 sub-contours inside a letter-contour (not 2).
+    # Refer to @varunkumar2310's answer : https://github.com/jasonlfunk/ocr-text-extraction/issues/2
+    if is_child(index, h_) and count_children(get_parent(index, h_), h_, contour) <= 5:
         if DEBUG:
             print "\t skipping: is an interior to a letter"
         return False
 
-    if count_children(index, h_, contour) > 2:
+    if count_children(index, h_, contour) > 5:
         if DEBUG:
             print "\t skipping, is a container of letters"
         return False
